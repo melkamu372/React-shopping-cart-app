@@ -15,6 +15,7 @@ const Router = () => {
         { path: "/shop", element: <Shop /> },
       ],
     },
+    { path: "/shop1", element: <Shop /> },
   ])
 
   return <div>
