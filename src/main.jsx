@@ -6,6 +6,10 @@ import './index.css'
 import Route from './router/Router.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+<<<<<<< HEAD
     <Route/>
+=======
+    <Route  />
+>>>>>>> main
   </React.StrictMode>,
 )
