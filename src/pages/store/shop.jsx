@@ -6,6 +6,7 @@ import { CartContext } from '../../context/context';
 const Shop = () => {
   const [shopItems, setShopItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedSortOption, setSelectedSortOption] = useState('none');
   const { setCartItemsCount } = useContext(CartContext); // Access the setCartItemsCount function from the CartContext
 
   useEffect(() => {
@@ -31,10 +32,31 @@ const Shop = () => {
     setSelectedCategory(category);
   };
 
+  const handleSortOptionChange = (sortOption) => {
+    setSelectedSortOption(sortOption);
+  };
+
+  const applySort = (items) => {
+    switch (selectedSortOption) {
+      case 'priceLowToHigh':
+        return items.sort((a, b) => a.price - b.price);
+      case 'priceHighToLow':
+        return items.sort((a, b) => b.price - a.price);
+      case 'nameAscending':
+        return items.sort((a, b) => a.name.localeCompare(b.name));
+      case 'nameDescending':
+        return items.sort((a, b) => b.name.localeCompare(a.name));
+      default:
+        return items;
+    }
+  };
+
   const filteredItems =
     selectedCategory === 'all'
       ? shopItems
       : shopItems.filter((item) => item.category === selectedCategory);
+
+  const sortedItems = applySort(filteredItems);
 
   return (
     <div className="container-fluid">
@@ -47,16 +69,34 @@ const Shop = () => {
           id="categorySelect"
           className="form-select"
           value={selectedCategory}
-          onChange={(e) => handleCategoryChange(e.target.value)}>
+          onChange={(e) => handleCategoryChange(e.target.value)}
+        >
           <option value="all">All</option>
-          <option value="men's clothing">men's clothing</option>
-          <option value="women's clothing">women's clothing</option>
-          <option value="jewelery">Jewelery</option>
+          <option value="men's clothing">Men's Clothing</option>
+          <option value="women's clothing">Women's Clothing</option>
+          <option value="jewelery">Jewelry</option>
           <option value="electronics">Electronics</option>
         </select>
       </div>
+      <div className="mb-3">
+        <label htmlFor="sortOptionSelect" className="form-label">
+          Sort by:
+        </label>
+        <select
+          id="sortOptionSelect"
+          className="form-select"
+          value={selectedSortOption}
+          onChange={(e) => handleSortOptionChange(e.target.value)}
+        >
+          <option value="none">None</option>
+          <option value="priceLowToHigh">Price: Low to High</option>
+          <option value="priceHighToLow">Price: High to Low</option>
+          <option value="nameAscending">Name: A to Z</option>
+          <option value="nameDescending">Name: Z to A</option>
+        </select>
+      </div>
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        {filteredItems.map((item) => (
+        {sortedItems.map((item) => (
           <div key={item.id} className="col">
             <ProductCard product={item} addToCart={addToCart} />
           </div>
