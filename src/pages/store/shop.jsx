@@ -43,9 +43,9 @@ const Shop = () => {
       case 'priceHighToLow':
         return items.sort((a, b) => b.price - a.price);
       case 'nameAscending':
-        return items.sort((a, b) => a.name.localeCompare(b.name));
+        return items.sort((a, b) => a.title.localeCompare(b.name));
       case 'nameDescending':
-        return items.sort((a, b) => b.name.localeCompare(a.name));
+        return items.sort((a, b) => b.title.localeCompare(a.name));
       default:
         return items;
     }
