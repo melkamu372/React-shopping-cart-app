@@ -23,9 +23,9 @@ const Shop = () => {
     }
   };
 
-  const addToCart = (product, quantity) => {
-    console.log('Adding to cart:', product, 'Quantity:', quantity);
-    setCartItemsCount((prevCount) => prevCount + quantity);
+  const addToCart = (product) => {
+    console.log('Adding to cart:', product);
+    setCartItemsCount((prevCount) => prevCount + 1);
   };
 
   const handleCategoryChange = (category) => {
@@ -76,10 +76,9 @@ const Shop = () => {
   );
 
   return (
-    <> 
-    <div className="container-fluid mt-3">
+    <div className="container mt-3">
       <div className="d-flex justify-content-end mb-3">
-      <div className="me-5">
+        <div className="me-5">
           <input
             type="text"
             id="searchInput"
@@ -87,8 +86,6 @@ const Shop = () => {
             value={searchQuery}
             onChange={handleSearchInputChange}
           />
-
-          
         </div>
         <div className="me-3">
           <select
@@ -104,7 +101,6 @@ const Shop = () => {
             ))}
           </select>
         </div>
-        
         <div>
           <select
             id="sortOptionSelect"
@@ -112,7 +108,7 @@ const Shop = () => {
             value={selectedSortOption}
             onChange={(e) => handleSortOptionChange(e.target.value)}
           >
-            <option value="none">None</option>
+            <option value="none">Sort</option>
             <option value="priceLowToHigh">Price: Low to High</option>
             <option value="priceHighToLow">Price: High to Low</option>
             <option value="nameAscending">Name: A to Z</option>
@@ -128,7 +124,6 @@ const Shop = () => {
         ))}
       </div>
     </div>
-    </>
   );
 };
 
