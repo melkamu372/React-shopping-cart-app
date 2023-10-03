@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { CartContext } from '../context/context';
 
 const ProductCard = ({ product }) => {
-  const { addToCart, removeFromCart, cartItems, cartItemsCount } = useContext(CartContext);
-
+  
+  
+  const { addToCart, removeFromCart, cartItems } = useContext(CartContext);
   const handleAddToCart = () => {
     addToCart(product);
   };

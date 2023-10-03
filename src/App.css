@@ -1,10 +1,11 @@
-.product-container{
- height: 400px;
- width: 25rem;
- align-items: center;
+.product-container {
+  height: 400px;
+  width: 25rem;
+  align-items: center;
 }
-.product-img{
+
+.product-img {
   width: 70%;
-  height: 50%;  
+  height: 50%;
   margin: 1.5rem;
 }
