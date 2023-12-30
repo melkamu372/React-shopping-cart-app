@@ -1,53 +1,37 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
-// Step 1: Create a Context
-const CounterContext = createContext();
+export const CartContext = createContext();
 
-// Step 2: Set up a Provider
-const CounterProvider = ({ children }) => {
-  const [count, setCount] = useState(0);
+export const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState([]);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
-  const increment = () => {
-    setCount(count + 1);
+  const addToCart = (product) => {
+    setCartItems((prevItems) => [...prevItems, product]);
+    setCartItemsCount((prevCount) => prevCount + 1);
   };
 
-  const decrement = () => {
-    setCount(count - 1);
+  const removeFromCart = (productId) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+    setCartItemsCount((prevCount) => prevCount - 1);
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    setCartItemsCount(0);
   };
 
   return (
-    <CounterContext.Provider value={{ count, increment, decrement }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        cartItemsCount,
+      }}
+    >
       {children}
-    </CounterContext.Provider>
+    </CartContext.Provider>
   );
 };
-
-// Step 3: Access the Context
-const CounterDisplay = () => {
-  const { count } = useContext(CounterContext);
-
-  return <div>Count: {count}</div>;
-};
-
-const CounterButtons = () => {
-  const { increment, decrement } = useContext(CounterContext);
-
-  return (
-    <div>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
-    </div>
-  );
-};
-
-// Step 4: Wrap your Components
-const contextApp = () => {
-  return (
-    <CounterProvider>
-      <CounterDisplay />
-      <CounterButtons />
-    </CounterProvider>
-  );
-};
-
-export default contextApp;

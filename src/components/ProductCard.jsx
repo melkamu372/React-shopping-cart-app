@@ -1,33 +1,38 @@
-import React, { useState } from 'react';
+import { useContext } from 'react';
+import { CartContext } from '../context/context';
 
-const ProductCard = ({ product, addToCart }) => {
-  const [quantity, setQuantity] = useState(0);
-
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
-
+const ProductCard = ({ product }) => {
+  
+  
+  const { addToCart, removeFromCart, cartItems } = useContext(CartContext);
   const handleAddToCart = () => {
-    addToCart(product, quantity);
-    setQuantity(0);
+    addToCart(product);
   };
+
+  const handleRemoveFromCart = () => {
+    removeFromCart(product.id);
+  };
+
+  const isItemInCart = cartItems.some((item) => item.id === product.id);
 
   return (
-    <div className="product-card">
-      <img src={product.image} alt={product.title} />
-      <h3>{product.title}</h3>
-      <div className="quantity-container">
-        <button onClick={handleDecrement}>-</button>
-        <input type="number" value={quantity} readOnly />
-        <button onClick={handleIncrement}>+</button>
+    <div className="card text-center product-container">
+      <img src={product.images[1]} alt={product.title} className="product-img" />
+      <div className="card-body ">
+        <p className="card-title">{product.title}</p>
+        <p className='fw-bold'> {product.price*50} Birr </p>
+        {isItemInCart ? (
+          <div>
+            <button className="btn btn-danger" onClick={handleRemoveFromCart}>
+              Remove From Cart
+            </button>
+          </div>
+        ) : (
+          <button className="btn btn-success" onClick={handleAddToCart}>
+            <span className="bi bi-bag-fill"> </span> Add To Cart
+          </button>
+        )}
       </div>
-      <button onClick={handleAddToCart}>Add To Cart</button>
     </div>
   );
 };
